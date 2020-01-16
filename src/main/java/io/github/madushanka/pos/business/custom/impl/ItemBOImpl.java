@@ -1,8 +1,8 @@
 package io.github.madushanka.pos.business.custom.impl;
 
 import io.github.madushanka.pos.business.custom.ItemBO;
-import io.github.madushanka.pos.dao.custom.ItemDAO;
-import io.github.madushanka.pos.dao.custom.OrderDetailDAO;
+import io.github.madushanka.pos.dao.ItemDAO;
+import io.github.madushanka.pos.dao.OrderDetailDAO;
 import io.github.madushanka.pos.dto.ItemDTO;
 import io.github.madushanka.pos.entity.Item;
 import javafx.scene.control.Alert;
@@ -33,7 +33,7 @@ public class ItemBOImpl implements ItemBO {
     @Override
     public void updateItem(ItemDTO item) throws Exception {
 
-            itemDAO.update(new Item(item.getCode(),
+            itemDAO.save(new Item(item.getCode(),
                     item.getDescription(), item.getUnitPrice(), item.getQtyOnHand()));
     }
 
@@ -42,7 +42,7 @@ public class ItemBOImpl implements ItemBO {
             if (orderDetailDAO.existsByItemCode(itemCode)) {
                 new Alert(Alert.AlertType.WARNING,"Item already exists in an order, hence unable to delete", ButtonType.OK).show();
             }else {
-             itemDAO.delete(itemCode);
+             itemDAO.deleteById(itemCode);
         }
     }
 
@@ -72,7 +72,7 @@ public class ItemBOImpl implements ItemBO {
 
     @Override
     public ItemDTO findItem(String itemCode) throws Exception {
-            Item item = itemDAO.find(itemCode);
+            Item item = itemDAO.findById(itemCode).get();
             return new ItemDTO(item.getCode(),
                     item.getDescription(),
                     item.getQtyOnHand(),

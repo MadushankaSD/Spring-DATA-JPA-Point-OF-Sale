@@ -1,8 +1,8 @@
 package io.github.madushanka.pos.business.custom.impl;
 
 import io.github.madushanka.pos.business.custom.CustomerBO;
-import io.github.madushanka.pos.dao.custom.CustomerDAO;
-import io.github.madushanka.pos.dao.custom.OrderDAO;
+import io.github.madushanka.pos.dao.CustomerDAO;
+import io.github.madushanka.pos.dao.OrderDAO;
 import io.github.madushanka.pos.dto.CustomerDTO;
 import io.github.madushanka.pos.entity.Customer;
 import javafx.scene.control.Alert;
@@ -29,7 +29,7 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Override
     public void updateCustomer(CustomerDTO customer) throws Exception {
-        customerDAO.update(new Customer(customer.getId(), customer.getName(), customer.getAddress()));
+        customerDAO.save(new Customer(customer.getId(), customer.getName(), customer.getAddress()));
     }
 
     @Override
@@ -38,7 +38,7 @@ public class CustomerBOImpl implements CustomerBO {
         if (orderDAO.existsByCustomerId(customerId)) {
             new Alert(Alert.AlertType.WARNING,"This customer Has Already a Order", ButtonType.OK).show();
         }else{
-        customerDAO.delete(customerId);
+        customerDAO.deleteById(customerId);
         }
     }
 
@@ -63,7 +63,7 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Override
     public CustomerDTO findCustomer(String customerId) throws Exception {
-        Customer customer = customerDAO.find(customerId);
+        Customer customer = customerDAO.findById(customerId).get();
         return new CustomerDTO(customer.getCustomerId(),
                 customer.getName(), customer.getAddress());
 

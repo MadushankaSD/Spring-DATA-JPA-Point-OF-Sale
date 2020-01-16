@@ -1,7 +1,7 @@
-package io.github.madushanka.pos.dao.custom.impl;
+package io.github.madushanka.pos.dao.impl;
 
 
-import io.github.madushanka.pos.dao.custom.QueryDAO;
+import io.github.madushanka.pos.dao.QueryDAO;
 import io.github.madushanka.pos.entity.CustomEntity;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
